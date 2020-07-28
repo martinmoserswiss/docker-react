@@ -1,0 +1,21 @@
+version: '3'
+services: 
+    react-app:
+        stdin_open: true # Recently, a bug was introduced with the latest Create React App version that is causing the React app to exit when starting with Docker Compose. Make sure you rebuild your containers after making this change with  docker-compose down && docker-compose up --build
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        ports: 
+            - "3000:3000"
+        volumes: 
+            - /app/node_modules #exclude this reference
+            - .:/app # current folder into the app folder in the container
+    tests:
+        stdin_open: true # Recently, a bug was introduced with the latest Create React App version that is causing the React app to exit when starting with Docker Compose. Make sure you rebuild your containers after making this change with  docker-compose down && docker-compose up --build
+        build:
+            context: .
+            dockerfile: Dockerfile.dev
+        volumes: 
+            - /app/node_modules #exclude this reference
+            - .:/app # current folder into the app folder in the container
+        command: ["npm", "run", "test"]
