@@ -13,4 +13,5 @@ RUN npm run build
 
 # Run step
 FROM nginx as runner
+EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
